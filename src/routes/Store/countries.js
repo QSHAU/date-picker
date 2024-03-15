@@ -1,4 +1,4 @@
-export const cities = [
+export const countries = [
     {
         "value": "AD",
         "label": "Andorra",

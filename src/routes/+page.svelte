@@ -1,8 +1,10 @@
 <script>
+    import Store from "./Store/Store.svelte";
     import Form from "./Form/Form.svelte";
 </script>
-
-<Form />
+<Store>
+    <Form />
+</Store>
 
 <style lang="scss">
     @import "./Fonts/Fonts.scss";
