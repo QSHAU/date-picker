@@ -1,0 +1,143 @@
+@import "../Vars/Vars.scss";
+@import "../Fonts/Fonts.scss";
+
+.date-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+    background-color: #F2F2F2;
+    box-shadow: 20px 20px 120px 15px rgba(0, 0, 0, 5%);
+    border-radius: 10px;
+    padding: 5px 23px 14px;
+    color: $textColor;
+
+    label {
+        display: flex;
+        flex-direction: column;
+        font-size: 14px;
+        line-height: 32px;
+        position: relative;
+    }
+
+    &__input {
+        display: inline-block;
+        font-size: 14px;
+        line-height: 32px;
+        background-color: #E0E0E0;
+        padding: 5px 18px 5px 37px;
+        border-radius: 5px;
+        width: 200px;
+        border: none;
+    }
+
+    &__box {
+        border: 1px solid #E0E0E0;
+        border-radius: 5px;
+        top: calc(100% + 25px);
+        z-index: 2;
+        min-width: 415px;
+        position: absolute;
+
+        &::before {
+            content: '';
+            width: 25px;
+            height: 25px;
+            border-radius: 5px;
+            border: 1px solid #E0E0E0;
+            background-color: #F2F2F2;
+            transform: rotate(45deg);
+            z-index: 1;
+            left: 20px;
+            top: -8px;
+            position: absolute;
+        }
+    }
+
+    &__cities {
+        display: flex;
+        flex-direction: column;
+        max-height: 300px;
+        padding: 10px;
+        background-color: #F2F2F2;  
+        overflow: auto;
+        z-index: 2;
+        position: relative;
+
+        &-item {
+            font-size: 14px;
+            line-height: 1;
+            font-weight: 400;
+            white-space: nowrap;
+            color: #333;
+            border-radius: 5px;
+            padding: 8px 10px;
+            transition: background-color .3s;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #E0E0E0;
+            }
+        }
+    }
+
+    &__when {
+        display: inline-block;
+
+        &-title {
+            font-size: 14px;
+            line-height: 32px;
+            color: $textColor;
+        }
+
+        button {
+            display: inline-block;
+            @extend %roboto-400;
+            font-size: 14px;
+            line-height: 1;
+            border: none;
+            border-radius: 0;
+            background-color: transparent;
+            position: relative;
+        }
+
+        &-line {
+            display: inline-block;
+            width: 20px;
+            height: 1px;
+            background-color: #BDBDBD;
+        }
+
+        &-left {
+            padding: 14px 50px 14px 64px;
+        }
+
+        &-right {
+            padding: 14px 44px 14px 70px;
+        }
+    }
+
+    &__wrapper {
+        display: flex;
+        align-items: center;
+        background-color: #E0E0E0;
+        border-radius: 5px;
+    }
+
+    &__submit {
+        display: inline-block;
+        @extend %roboto-700;
+        font-size: 16px;
+        line-height: 1;
+        color: #F2F2F2;
+        background-color: $textColor;
+        padding: 14px 53px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color .3s;
+
+        &:hover {
+            background-color: #565555;
+        }
+    }
+}
