@@ -1,4 +1,4 @@
-@import "../Vars/Vars.scss";
+// @import "@routes/Vars/Vars.scss";
 @import "../Fonts/Fonts.scss";
 
 .date-form {
@@ -11,7 +11,7 @@
     padding: 5px 23px 14px;
     color: $textColor;
 
-    label {
+    & > label {
         display: flex;
         flex-direction: column;
         font-size: 14px;
@@ -40,7 +40,13 @@
         padding: 5px 18px 5px 37px;
         border-radius: 5px;
         width: 200px;
-        border: none;
+        border: 1px solid transparent;
+        transition: all .3s;
+
+        &.error {
+            border-color: red;
+            box-shadow: 0 0 8px 2px red;
+        }
     }
 
     &__box {
@@ -89,7 +95,7 @@
             line-height: 1;
             font-weight: 400;
             white-space: nowrap;
-            color: #333;
+            color: $textColor;
             border-radius: 5px;
             padding: 8px 10px;
             transition: background-color .3s;
@@ -130,12 +136,14 @@
         }
 
         &-left {
+            text-transform: capitalize;
             pointer-events: none;
             padding: 14px 50px 14px 64px;
             
         }
 
         &-right {
+            text-transform: capitalize;
             pointer-events: none;
             padding: 14px 44px 14px 70px;
         }
@@ -201,5 +209,56 @@
             opacity: 1;
             pointer-events: unset;
         }
+    }
+}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 350px;
+    min-height: 350px;
+    background-color: #F2F2F2;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 0 15px #000;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+
+    &__title {
+        text-align: center;
+        margin: 0 0 25px;
+    }
+
+    &__result {
+        display: flex;
+
+        &:not(:last-child) {
+            margin-bottom: 10px;
+        }
+
+        &-left,
+        &-right {
+            text-transform: capitalize;
+        }
+
+        &-right {
+            margin-left: 5px;
+        }
+    }
+
+    &-bg {
+        width: 100%;
+        height: 100%;
+        background-color: rgba(51, 51, 51, 0.3);
+        z-index: 1;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        position: fixed;
     }
 }

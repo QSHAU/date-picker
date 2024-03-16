@@ -1,10 +1,7 @@
 <script>
-    import Store from "./Store/Store.svelte";
-    import Form from "./Form/Form.svelte";
+    import "./Form/Form.svelte";
 </script>
-<Store>
-    <Form />
-</Store>
+<date-form></date-form>
 
 <style lang="scss">
     @import "./Fonts/Fonts.scss";
@@ -24,4 +21,5 @@
     :global(body *) {
         box-sizing: border-box;
     }
+    
 </style>

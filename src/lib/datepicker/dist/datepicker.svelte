@@ -1,6 +1,6 @@
 <script>
   // @ts-nocheck
-  import { tick, getContext } from 'svelte';
+  import { tick, getContext, createEventDispatcher } from 'svelte';
   import { clickOutside } from './actions';
 
   /**
@@ -235,7 +235,6 @@
    * Initialization flag to delay some actions
    * @type {any}
    */
-  const {withoutLastDate} = getContext('store');
 
   /**
    * Initialization flag to delay some actions
@@ -904,12 +903,21 @@
     initialize = true;
   }
 
-  const test = (e) => {
-    if(e?.target?.checked) {
-      $withoutLastDate = false;
-    } else {
-      $withoutLastDate = true
+  const closeCalendar = (e) => {
+    e.target.closest('.date-form__wrapper').classList.remove('calendarOpened');
+  }
+
+  const rangeCheckbox = createEventDispatcher();
+  const testCheck = createEventDispatcher();
+  const calendarIsRange = (e) => {
+        rangeCheckbox('isChecked', {
+          checked: e.target.checked
+        });
     }
+  const getCheckbox = (e) => {
+    testCheck('checkboxClick', {
+      checked: e.target.checked
+    })
   }
 </script>
 
@@ -1001,6 +1009,7 @@
                     on:mouseleave={onMouseLeave}
                     on:click={(e) => onClick(e, startDateCalendar[weekIndex][dayIndex], startDateMonth, startDateYear)}
                     class:norange={isRange && tempEndDate === startDate}
+                    type="button"
                   >
                     <span>{startDateCalendar[weekIndex][dayIndex]}</span>
                   </button>
@@ -1070,6 +1079,7 @@
                       on:mouseleave={onMouseLeave}
                       on:click={(e) => onClick(e, endDateCalendar[weekIndex][dayIndex], endDateMonth, endDateYear)}
                       class:norange={isRange && tempEndDate === startDate}
+                      type="button"
                     >
                       <span>{endDateCalendar[weekIndex][dayIndex]}</span>
                     </button>
@@ -1085,11 +1095,15 @@
     </div>
     <div class="datepicker__bottom">
       <label class="datepicker__bottom-withoutEnd">
-        <input class="datepicker__bottom-check" type="checkbox" on:change={test}/>
-        <span class="datepicker__bottom-checkbox"></span>
+        <input class="datepicker__bottom-check" type="checkbox" on:change={(e) => {calendarIsRange(e), getCheckbox(e)}}/>
+        <span class="datepicker__bottom-checkbox">
+          <svg width="8" height="6" viewBox="0 0 8 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.63221 2.13051L4.10493 5.63429C3.85942 5.87868 3.53803 6 3.21638 6C2.89499 6 2.57335 5.87868 2.32809 5.63429L0.36807 3.68744C-0.12269 3.20042 -0.12269 2.4101 0.36807 1.92257C0.858829 1.43505 1.65415 1.43505 2.14491 1.92257L3.21613 2.98699L5.85462 0.365643C6.34538 -0.121881 7.1407 -0.121881 7.63146 0.365643C8.12272 0.852418 8.12272 1.64274 7.63221 2.13051Z" fill="#333333"/>
+          </svg>            
+        </span>
         Без конечной даты
       </label>
-      <button class="datepicker__bottom-submit" type="button">
+      <button class="datepicker__bottom-submit" type="button" on:click={closeCalendar}>
         Готово
       </button>
     </div>
@@ -1106,6 +1120,9 @@
 </svelte:head>
 
 <style>
+  .datepicker button {
+    border: none;
+  }
   .datepicker {
     border: 1px solid #e0e0e0;
     z-index: 2;
@@ -1359,14 +1376,9 @@
     position: absolute;
   }
 
-  .datepicker__bottom-checkbox::before {
-    content: '';
+  .datepicker__bottom-checkbox svg {
     width: 8px;
     height: 6px;
-    background-image: url("@img/check-icon.svg");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
     opacity: 0;
     transition: opacity .3s;
     transform: translate(-50%, -50%);
@@ -1375,7 +1387,7 @@
     position: absolute;
   }
 
-  .datepicker__bottom-check:checked + .datepicker__bottom-checkbox::before {
+  .datepicker__bottom-check:checked + .datepicker__bottom-checkbox svg{
     opacity: 1;
   }
 

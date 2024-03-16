@@ -7,9 +7,10 @@ export default defineConfig({
 	resolve: {
 		alias: {
 			"@bib": path.resolve(__dirname, 'src/lib'),
-			"@img": path.resolve(__dirname, 'src/images'),
 			"@routes": path.resolve(__dirname, 'src/routes'),
 		}
 	},
-	plugins: [sveltekit()]
+	plugins: [
+		sveltekit(),
+	]
 });

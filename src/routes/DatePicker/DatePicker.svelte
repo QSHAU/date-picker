@@ -1,23 +1,31 @@
 <script>
     import { DatePicker } from "@bib/datepicker";
-    // import { format } from 'date-fns';
     import {defaultConfig} from "./cfg";
-    import {format} from 'date-fns';
-    import {ru} from 'date-fns/locale';
 	import { getContext } from "svelte";
-
-    const {dateFrom, dateTo, withoutLastDate} = getContext('store');
+    import { createEventDispatcher } from "svelte";
+    
     let startDate,
         endDate,
-        isRange;
+        isRange,
+        isChecked;
 
-$: if(startDate) {
-        $dateFrom = format(new Date(startDate), "EEEEEE/dd/MM", {locale: ru})
+    const emit = createEventDispatcher();
+    const test = createEventDispatcher();
+    const choiseDay = (e) => {
+        emit('getDays', {
+            startDate: e.startDate,
+            endDate: e.endDate,
+        });
     }
-$: if (endDate) {
-        $dateTo = format(new Date(endDate), "EEEEEE/dd/MM", {locale: ru})
+    const clickCheckbox = (e) => {
+        test('getInputCheck', {
+            checked: e.detail.checked,
+        })
     }
-$: isRange = $withoutLastDate;
+    const getInfoCheckbox = (e) => {
+        isChecked = e.detail.checked
+    }
+$: isRange = !isChecked;
 </script>
 
 <DatePicker showYearControls={false} 
@@ -26,11 +34,14 @@ $: isRange = $withoutLastDate;
             isOpen 
             alwaysShow
             enablePastDates={false} 
-            enableFutureDates 
+            enableFutureDates
             includeFont={false}
             dowLabels={defaultConfig.dowLabels}
             monthLabels={defaultConfig.monthLabels}
             startOfWeek={defaultConfig.startOfWeek}
             bind:startDate
             bind:endDate
+            onDayClick={choiseDay}
+            on:isChecked={getInfoCheckbox}
+            on:checkboxClick={clickCheckbox}
 />
